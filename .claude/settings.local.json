@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node pull.js)",
+      "Bash(claude update *)",
+      "Bash(sudo claude *)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/nycehs/NYC_geography/master/borough_boundaries.geojson\" -o /tmp/borough_boundaries.geojson)",
+      "Read(//tmp/**)",
+      "Bash(curl -s \"https://api.github.com/repos/nycehs/NYC_geography/git/trees/master?recursive=1\")",
+      "Bash(python3 -c \"import sys,json; [print\\(f['path']\\) for f in json.load\\(sys.stdin\\).get\\('tree',[]\\) if f['path'].endswith\\('.geojson'\\)]\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); print\\(json.dumps\\(data.get\\('tree',[]\\)[:20], indent=2\\)\\)\")",
+      "Bash(curl -s --max-time 30 \"https://data.cityofnewyork.us/api/geospatial/7t3b-ywvw?method=export&type=GeoJSON\" -o /tmp/borough_boundaries.geojson)",
+      "Bash(curl -s --max-time 30 \"https://raw.githubusercontent.com/dwillis/nyc-maps/master/boroughs.geojson\" -o /tmp/borough_boundaries.geojson)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3)",
+      "WebSearch",
+      "WebFetch(domain:developers.google.com)",
+      "WebFetch(domain:mapsplatform.google.com)",
+      "Bash(npm install *)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(curl -s --max-time 30 \"https://raw.githubusercontent.com/dwillis/nyc-maps/master/boroughs.geojson\" -o /tmp/boroughs.geojson)",
+      "Bash(node -e \"const b = require\\('@turf/boolean-point-in-polygon'\\); console.log\\('bpip type:', typeof b, typeof b.default\\); const h = require\\('@turf/helpers'\\); console.log\\('helpers keys:', Object.keys\\(h\\).slice\\(0,8\\)\\)\")",
+      "Bash(node -e \"const h = require\\('@turf/helpers'\\); console.log\\('has point:', typeof h.point\\); console.log\\('has feature:', typeof h.feature\\)\")",
+      "Bash(node -e \"const g = require\\('./manhattan-grid.js'\\); console.log\\('Count:', g.length\\); console.log\\('First:', g[0]\\); console.log\\('Last:', g[g.length-1]\\);\")",
+      "Bash(node -e ' *)",
+      "Bash(tee /tmp/pull_output.log)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}

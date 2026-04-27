@@ -13,7 +13,11 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const { createClient } = require('@supabase/supabase-js');
+const booleanPointInPolygon = require('@turf/boolean-point-in-polygon').default;
+const { point } = require('@turf/helpers');
 const gridPoints = require('./manhattan-grid.js');
+const manhattanBoundary = require('./manhattan-boundary.json');
+const manhattanFeature = manhattanBoundary.features[0];
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -24,6 +28,13 @@ const PROGRESS_FILE = path.join(__dirname, 'pull-progress.json');
 const DELAY_MS = 2000;
 const TOTAL = gridPoints.length;
 const PULL_DATE = new Date().toISOString().split('T')[0];
+
+const EXCLUDED_CATEGORIES = new Set([
+  'hotel', 'gas_station', 'park', 'bowling_alley', 'miniature_golf_course',
+  'manufacturer', 'consultant', 'association_or_organization', 'tourist_attraction',
+  'observation_deck', 'event_venue', 'movie_theater', 'sports_activity_location',
+  'comedy_club', 'shopping_mall'
+]);
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -85,6 +96,16 @@ async function pullPoint(gridPoint, index, completed) {
         pull_date: PULL_DATE,
         last_seen: new Date().toISOString()
       };
+
+      if (record.latitude === null || record.longitude === null || !booleanPointInPolygon(point([record.longitude, record.latitude]), manhattanFeature)) {
+        console.log(`  Skipped ${record.name} — outside Manhattan boundary`);
+        continue;
+      }
+
+      if (EXCLUDED_CATEGORIES.has(record.category)) {
+        console.log(`  Skipped ${record.name} — excluded category: ${record.category}`);
+        continue;
+      }
 
       const { error } = await supabase
         .from('places_nyc')

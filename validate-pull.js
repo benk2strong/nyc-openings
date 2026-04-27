@@ -112,6 +112,14 @@ async function validate() {
   console.log(`Rows with excluded categories: ${excludedCount}`);
   if (excludedCount > 0) failures.push(`${excludedCount} rows with excluded categories`);
 
+  // 6b. Uncategorized rows (informational, not a failure)
+  const { count: uncategorizedCount, error: e6b } = await supabase
+    .from('places_nyc')
+    .select('*', { count: 'exact', head: true })
+    .eq('category', 'uncategorized');
+  if (e6b) throw new Error(e6b.message);
+  console.log(`Rows with uncategorized category: ${uncategorizedCount}`);
+
   // 7. Top 10 categories
   const { data: catRows, error: e7 } = await supabase
     .from('places_nyc')

@@ -89,7 +89,7 @@ async function pullPoint(gridPoint, index, completed) {
         address: place.formattedAddress || '',
         latitude: place.location?.latitude || null,
         longitude: place.location?.longitude || null,
-        category: place.primaryType || '',
+        category: place.primaryType || 'uncategorized',
         place_source_id: place.id,
         phone: place.internationalPhoneNumber || '',
         website: place.websiteUri || '',
@@ -104,6 +104,11 @@ async function pullPoint(gridPoint, index, completed) {
 
       if (EXCLUDED_CATEGORIES.has(record.category)) {
         console.log(`  Skipped ${record.name} — excluded category: ${record.category}`);
+        continue;
+      }
+
+      if (/Brooklyn|Bronx|Queens|Staten Island/.test(record.address)) {
+        console.log(`  Skipped ${record.name} — non-Manhattan address: ${record.address}`);
         continue;
       }
 

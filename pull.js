@@ -30,10 +30,19 @@ const TOTAL = gridPoints.length;
 const PULL_DATE = new Date().toISOString().split('T')[0];
 
 const EXCLUDED_CATEGORIES = new Set([
+  // original list
   'hotel', 'gas_station', 'park', 'bowling_alley', 'miniature_golf_course',
   'manufacturer', 'consultant', 'association_or_organization', 'tourist_attraction',
   'observation_deck', 'event_venue', 'movie_theater', 'sports_activity_location',
-  'comedy_club', 'shopping_mall'
+  'comedy_club', 'shopping_mall',
+  // expanded list
+  'museum', 'car_dealer', 'car_repair', 'tire_shop', 'place_of_worship', 'general_hospital',
+  'hospital', 'dentist', 'doctor', 'pharmacy', 'school', 'university', 'library',
+  'post_office', 'police', 'fire_station', 'courthouse', 'city_hall', 'embassy',
+  'bank', 'atm', 'insurance_agency', 'real_estate_agency', 'lawyer', 'accounting',
+  'car_wash', 'car_rental', 'parking', 'storage', 'moving_company', 'locksmith',
+  'plumber', 'electrician', 'roofing_contractor', 'painter', 'funeral_home', 'cemetery',
+  'church', 'synagogue', 'mosque'
 ]);
 
 function sleep(ms) {

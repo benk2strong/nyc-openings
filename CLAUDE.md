@@ -23,3 +23,9 @@ A Node.js backend that pulls NYC restaurant/retail data from Google Places API, 
 
 ## Database Schema (places_nyc)
 name (text), address (text), latitude (float8), longitude (float8), category (text), place_source_id (text, unique), phone (text), website (text), date_created (date), social_media (jsonb), first_seen (timestamptz), last_seen (timestamptz)
+
+## Development Process Rules
+- Always check todo.md before starting a new task. Work top-down within the current phase.
+- Never start a Phase 3 or 4 task while Phase 1 has incomplete Must Have items.
+- After completing any task, update todo.md to mark it done.
+- If a task isn't on the list, add it to the appropriate phase before starting it.
